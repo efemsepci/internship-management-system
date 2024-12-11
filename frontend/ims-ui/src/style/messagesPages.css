@@ -1,0 +1,140 @@
+.messages-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #0839AE;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.messages-list {
+  width: 40%;
+  padding-right: 20px;
+}
+
+.messages-list h3 {
+  margin-bottom: 10px;
+  color:white;
+}
+
+.messages-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.messages-list li {
+  margin-bottom: 10px;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message-detail {
+  width: 55%;
+}
+
+.message-detail textarea {
+  width: 600px;
+  height: 100px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid white;
+  margin-bottom: 10px;
+}
+
+.message-detail button {
+  padding: 10px 20px;
+  background-color: white;
+  color: #0839AE;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.message-detail button:hover {
+  background-color: black;
+}
+
+.new-old-message-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: white;
+  color: #0839ae;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.new-old-message-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal textarea {
+  width: 100%;
+  height: 100px;
+  margin: 10px 0;
+}
+
+.modal-buttons button {
+  margin: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+
+.dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown input {
+  width: 100%;
+  padding: 8px;
+}
+
+.dropdown-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown-list li {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropdown-list li:hover {
+  background: #f0f0f0;
+}
+

@@ -1,0 +1,77 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Times New Roman', Times, serif;
+    height: 100%;
+  }
+  
+  .login-container {
+    background-image: url('../assests/loginBackground.jpg'); 
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: white;
+  }
+
+  h2 {
+    color: rgba(255, 255, 255, 0.9); 
+  }
+  
+  .login-box {
+    background-color:#0839AE; 
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+  }
+  
+  .input-field {
+    width: 80%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column; 
+    gap: 10px; 
+    width: 80%;
+    margin-left: 10%;
+  }
+  
+  .btn {
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 1;
+  }
+  
+  .login-btn {
+    background-color: rgba(255, 255, 255, 0.9);;
+    color: #0839ae;
+  }
+  
+  .register-btn {
+    background-color: rgba(255, 255, 255, 0.9);;
+    color: #0839ae;
+  }
+  
+  @media (max-width: 768px) {
+    .login-box {
+      width: 90%;
+    }
+  }
+  
