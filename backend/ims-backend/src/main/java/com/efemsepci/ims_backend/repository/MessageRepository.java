@@ -11,4 +11,6 @@ import java.util.List;
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Long> {
     List<Message> findByReceiverAndStatus(User receiver, MessageStatus status);
+    void deleteBySenderId(Long senderId);
+    void deleteByReceiverId(Long receiverId);
 }

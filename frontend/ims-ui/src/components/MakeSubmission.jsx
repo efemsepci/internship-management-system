@@ -37,6 +37,9 @@ const MakeSubmission = () => {
 
   const [file, setFile] = useState(null);
   const [advisors, setAdvisors] = useState([]);
+  const [submissionCheck, setSubmissionCheck] = useState([]);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [reload, setReload] = useState(false); 
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   useEffect(() => {
@@ -47,7 +50,32 @@ const MakeSubmission = () => {
       .catch((error) => {
         console.error("Error, can not load advisors!", error);
       });
-  }, []);
+    SubmissionService.getSubmissionsBySender(user.id)
+      .then((response) => {
+        setSubmissionCheck(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+  }, [reload]);
+
+  const calculateWorkDays = (start, end) => {
+    console.log(start, end)
+    let startDate = new Date(start);
+    console.log(startDate.toLocaleDateString())
+    const endDate = new Date(end);
+    let workDayCount = 0;
+
+    while (startDate <= endDate) {
+      const dayOfWeek = startDate.getDay();
+      if (dayOfWeek !== 0 && dayOfWeek !== 6) {
+        workDayCount++;
+      }
+      startDate.setDate(startDate.getDate() + 1);
+    }
+    console.log(workDayCount)
+    return workDayCount;
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -65,21 +93,49 @@ const MakeSubmission = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // Dosyayı ve form verilerini ayrı ayrı gönderme
-    SubmissionService.createSubmission(
-      user.id, 
-      formData.advisor, 
-      file, 
-      { ...formData }
-    )
-      .then((response) => {
-        console.log("Submission data sent successfully:", response.data);
-        alert("Submission sent!")
-      })
-      .catch((error) => {
-        console.error("Error submitting submission data:", error);
-      });
+    setErrorMessage("");
+
+    const calculatedWorkDays = calculateWorkDays(formData.startDate, formData.endDate);
+
+    if (calculatedWorkDays < 20) {
+      setErrorMessage("The work days between the start date and end date must be at least 20 days!");
+      alert(errorMessage);
+      return;
+    }
+
+    if (parseInt(formData.internshipDays) < 20) {
+      setErrorMessage("Entered work days must be at least 20 days!");
+      alert(errorMessage);
+      return;
+    }
+
+    if (parseInt(formData.internshipDays) !== calculatedWorkDays) {
+      setErrorMessage("Entered work days must be equal calculated work day!");
+      alert(errorMessage);
+      return;
+    }
+    console.log(submissionCheck);
+    if(submissionCheck.length === 0){
+      SubmissionService.createSubmission(
+        user.id, 
+        formData.advisor, 
+        file, 
+        { ...formData }
+      )
+        .then((response) => {
+          console.log("Submission data sent successfully:", response.data);
+          alert("Submission sent!")
+          setReload((prev) => !prev);
+        })
+        .catch((error) => {
+          console.error("Error submitting submission data:", error);
+        });
+    }
+    else{
+      alert("You have submitted submission!!!")
+      setReload((prev) => !prev);
+      return;
+    }
   };
 
   return (

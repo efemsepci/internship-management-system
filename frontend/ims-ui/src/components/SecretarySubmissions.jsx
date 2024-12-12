@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import SubmissionService from "../services/SubmissionService";
 import "../style/submissions.css";
+import InternshipService from "../services/InternshipService";
 
 const SecretarySubmissions = () => {
   const [submissions, setSubmissions] = useState([]); 
   const [reload, setReload] = useState(false); 
 
   useEffect(() => {
-    SubmissionService.getSubmissions(user.id)
+    SubmissionService.getAllSubmissions()
       .then((response) => {
         const filteredSubmissions = response.data.filter(
           (submission) => submission.secretaryCheck === "UNCHECKED" && submission.advisorCheck === "CHECKED"
@@ -17,11 +18,12 @@ const SecretarySubmissions = () => {
       .catch((error) => {
         console.error("Error fetching submissions:", error);
       });
-  }, [user.id, reload]);
+  }, [reload]);
 
   const handleAcceptClick = (submissionId) => {
     SubmissionService.secretaryApprove(submissionId)
       .then(() => {
+        InternshipService.createInternship(submissionId)
         SubmissionService.deleteSubmission(submissionId);
         setReload((prev) => !prev);
       })

@@ -2,6 +2,8 @@ package com.efemsepci.ims_backend.controller;
 
 import com.efemsepci.ims_backend.entity.*;
 import com.efemsepci.ims_backend.enums.Role;
+import com.efemsepci.ims_backend.service.MessageService;
+import com.efemsepci.ims_backend.service.SubmissionService;
 import com.efemsepci.ims_backend.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,8 @@ import java.util.Map;
 public class UserController {
 
     private UserService userService;
+    private MessageService messageService;
+    private SubmissionService submissionService;
 
     @GetMapping("/users")
     public List<User> getAllUsers(){
@@ -49,6 +53,8 @@ public class UserController {
     }
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Map<String,Boolean>> deleteUser(@PathVariable Long id) {
+        submissionService.deleteSubmissionsForUser(id);
+        messageService.deleteMessagesForUser(id);
         return userService.deleteUserById(id);
     }
     @GetMapping("/users/role/{role}")

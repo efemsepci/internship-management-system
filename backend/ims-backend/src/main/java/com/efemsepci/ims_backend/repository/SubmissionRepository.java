@@ -8,4 +8,7 @@ import java.util.List;
 
 public interface SubmissionRepository extends JpaRepository<Submission, Long> {
     List<Submission> findByReceiver(User receiver);
+    List<Submission> findBySender(User sender);
+    void deleteBySenderId(Long senderId);
+    void deleteByReceiverId(Long receiverId);
 }

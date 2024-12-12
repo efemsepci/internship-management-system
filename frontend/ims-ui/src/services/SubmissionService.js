@@ -6,13 +6,11 @@ class SubmissionService {
   createSubmission(senderId, receiverId, file, formValues) {
     const formData = new FormData();
 
-    // FormData'ya parametreleri ekle
     formData.append("senderId", senderId);
     formData.append("receiverId", receiverId);
     formData.append("file", file);
-    formData.append("formValues", JSON.stringify(formValues)); // formValues'u JSON string'e dönüştür
+    formData.append("formValues", JSON.stringify(formValues));
 
-    // Axios ile POST isteği yap
     return axios.post(`${SUBMISSION_API_URL}/make`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -34,6 +32,12 @@ class SubmissionService {
   }
   getSubmissions(userId) {
     return axios.get(SUBMISSION_API_URL + "/" + userId);
+  }
+  getSubmissionsBySender(senderId) {
+    return axios.get(SUBMISSION_API_URL + "/sender/" + senderId);
+  }
+  getAllSubmissions() {
+    return axios.get(SUBMISSION_API_URL);
   }
   deleteSubmission(id) {
     return axios.delete(SUBMISSION_API_URL + "/" + id);

@@ -9,6 +9,8 @@ import Evaluation from "./components/Evaluation";
 import MessagesPage from "./components/MessagesPage";
 import MakeSubmission from "./components/MakeSubmission";
 import Submissions from "./components/Submissions";
+import SecretarySubmissions from "./components/SecretarySubmissions";
+import Admin from "./components/Admin";
 
 function App() {
   return (
@@ -26,6 +28,11 @@ function App() {
             path="/submissions"
             element={<Submissions></Submissions>}
           ></Route>
+          <Route
+            path="/sec-submissions"
+            element={<SecretarySubmissions />}
+          ></Route>
+          <Route path="/users" element={<Admin />}></Route>
         </Routes>
       </Layout>
     </Router>

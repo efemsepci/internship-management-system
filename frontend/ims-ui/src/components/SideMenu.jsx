@@ -23,6 +23,7 @@ const SideMenu = () => {
         {user.role === "SECRETARY" && <li><a href="/sec-submissions">Submissions</a></li>}
         {user.role === "ADVISOR" &&<li><a href="/evaluation">Evaluation</a></li>}
         {user.role === "STUDENT" && <li><a href="/make-submission">Make Submission</a></li>}
+        {user.role === "ADMIN" && <li><a href="/users">Users</a></li>}
         <li><a href="/messages">Messages</a></li>
       </ul>
       <button className="logout-button" onClick={handleLogout}>Logout</button>

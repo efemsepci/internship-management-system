@@ -5,6 +5,7 @@ import com.efemsepci.ims_backend.entity.User;
 import com.efemsepci.ims_backend.enums.MessageStatus;
 import com.efemsepci.ims_backend.repository.MessageRepository;
 import com.efemsepci.ims_backend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -56,5 +57,10 @@ public class MessageService {
             throw new IllegalArgumentException("Message not found id: " + id);
         }
         messageRepository.deleteById(id);
+    }
+    @Transactional
+    public void deleteMessagesForUser(Long userId) {
+        messageRepository.deleteBySenderId(userId);
+        messageRepository.deleteByReceiverId(userId);
     }
 }

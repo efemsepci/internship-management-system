@@ -54,6 +54,16 @@ public class SubmissionController {
         return submissionService.getSubmissionsByReceiver(userId);
     }
 
+    @GetMapping("/sender/{userId}")
+    public List<Submission> getSubmissionsBySender(@PathVariable Long userId){
+        return submissionService.getSubmissionsBySender(userId);
+    }
+
+    @GetMapping
+    public List<Submission> getAll(){
+        return submissionService.findAllSubmission();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteSubmission(@PathVariable Long id) {
         try {

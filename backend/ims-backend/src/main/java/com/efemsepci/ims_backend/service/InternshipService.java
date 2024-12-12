@@ -46,7 +46,6 @@ public class InternshipService {
         internship.setInternAdvisorPhone(submission.getInternAdvisorPhone());
         internship.setInternAdvisorMail(submission.getInternAdvisorMail());
         internship.setInternshipTopic(submission.getInternshipTopic());
-        internship.setWorkingType(submission.getWorkingType());
 
         internship.setIsEvaluationForm(null);
         internship.setIsReport(null);
@@ -61,5 +60,23 @@ public class InternshipService {
 
     public List<Internship> getInternships() {
         return internshipRepository.findAll();
+    }
+
+    public Internship updateInternship(Long id, String isEvaluation, String isReport, String grade){
+        Internship internship = internshipRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Internship not exist!"));
+        if (isEvaluation != null) {
+            internship.setIsEvaluationForm(isEvaluation);
+        }
+        else{
+            System.out.println("No is evaluation");
+        }
+        if (isReport != null) {
+            internship.setIsReport(isReport);
+        }
+        if (grade != null) {
+            internship.setGrade(grade);
+        }
+        return internshipRepository.save(internship);
     }
 }

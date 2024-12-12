@@ -26,6 +26,9 @@ const LoginScreen = () => {
             else if(response.data.role === 'STUDENT'){
               navigate('/std-documents');
             }
+            else if(response.data.role === 'ADMIN'){
+              navigate('/users');
+            }
           }else{
             alert("Wrong password or email!!!");
           }

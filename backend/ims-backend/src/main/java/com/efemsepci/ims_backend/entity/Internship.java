@@ -48,7 +48,6 @@ public class Internship {
     private String internAdvisorPhone;
     private String internAdvisorMail;
     private String internshipTopic;
-    private String workingType;
 
     private String isEvaluationForm;
     private String isReport;

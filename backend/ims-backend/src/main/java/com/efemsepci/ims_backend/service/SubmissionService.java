@@ -6,6 +6,7 @@ import com.efemsepci.ims_backend.enums.InternshipStatus;
 import com.efemsepci.ims_backend.enums.SubmissionStatus;
 import com.efemsepci.ims_backend.repository.SubmissionRepository;
 import com.efemsepci.ims_backend.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,10 +76,20 @@ public class SubmissionService {
         return submissionRepository.findById(id);
     }
 
+    public List<Submission> findAllSubmission(){
+        return submissionRepository.findAll();
+    }
+
     public List<Submission> getSubmissionsByReceiver(Long userId){
         User receiver = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         return submissionRepository.findByReceiver(receiver);
+    }
+
+    public List<Submission> getSubmissionsBySender(Long userId){
+        User sender = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+        return submissionRepository.findBySender(sender);
     }
 
     public void markAsCheckedAdvisor(Long submissionId) {
@@ -102,5 +113,11 @@ public class SubmissionService {
             throw new IllegalArgumentException("Submission not found id: " + id);
         }
         submissionRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void deleteSubmissionsForUser(Long userId) {
+        submissionRepository.deleteBySenderId(userId);
+        submissionRepository.deleteByReceiverId(userId);
     }
 }

@@ -27,13 +27,13 @@ const RegisterScreen = () => {
     const tempUser = UserService.getUserByEmail(formData.email);
     if(tempUser === null){
       const user = { ...formData, role, internshipStatus };
-  try {
-    const createResponse = await UserService.createStudent(user);
-    sessionStorage.setItem("user", JSON.stringify(createResponse.data));
-    navigate('/documents');
-  } catch (err) {
-    console.error("Error creating user:", err);
-    alert("Registration failed!");  // Kayıt işlemi başarısızsa hata mesajı
+      try {
+        const createResponse = await UserService.createStudent(user);
+        sessionStorage.setItem("user", JSON.stringify(createResponse.data));
+        navigate('/documents');
+      } catch (err) {
+        console.error("Error creating user:", err);
+        alert("Registration failed!");
   }
     }
     else{

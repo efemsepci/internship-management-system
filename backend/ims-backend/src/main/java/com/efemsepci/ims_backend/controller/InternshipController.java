@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/internships")
 public class InternshipController {
@@ -46,5 +47,15 @@ public class InternshipController {
     public ResponseEntity<List<Internship>> getInternships() {
         List<Internship> internships = internshipService.getInternships();
         return ResponseEntity.ok(internships);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Internship> updateInternship(
+            @PathVariable Long id,
+            @RequestParam(required = false) String isEvaluation,
+            @RequestParam(required = false) String isReport,
+            @RequestParam(required = false) String grade) {
+        Internship updatedInternship = internshipService.updateInternship(id, isEvaluation, isReport, grade);
+        return ResponseEntity.ok(updatedInternship);
     }
 }

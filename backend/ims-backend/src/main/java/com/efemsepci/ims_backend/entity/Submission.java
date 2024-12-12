@@ -73,6 +73,5 @@ public class Submission {
     private String internAdvisorPhone;
     private String internAdvisorMail;
     private String internshipTopic;
-    private String workingType;
 
 }

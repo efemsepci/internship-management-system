@@ -25,13 +25,46 @@ const MessagesPage = () => {
         console.error('Error, can not load messages!', error);
       });
 
-    UserService.getUsers()
+    if(user.role === 'ADMIN'){
+      UserService.getUsers()
       .then((response) => {
         setUsers(response.data);
       })
       .catch((error) => {
         console.error('Error, can not load users!', error);
       });
+    }
+    else if(user.role === 'ADVISOR'){
+      Promise.all([
+        UserService.getUserByRole('STUDENT'),
+        UserService.getUserByRole('SECRETARY')
+      ])
+      .then(([studentResponse, secretaryResponse]) => {
+        const allUsers = [...studentResponse.data, ...secretaryResponse.data];
+        setUsers(allUsers);
+      })
+      .catch((error) => {
+        console.error('Error fetching users:', error);
+      });
+    }
+    else if(user.role === 'SECRETARY'){
+      UserService.getUserByRole('ADVISOR')
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error('Error, can not load users!', error);
+      })
+    }
+    else if(user.role === 'STUDENT'){
+      UserService.getUserByRole('ADVISOR')
+      .then((response) => {
+        setUsers(response.data);
+      })
+      .catch((error) => {
+        console.error('Error, can not load users!', error);
+      })
+    }
   }, [user.id]);
 
   const handleMessageClick = (message) => {
