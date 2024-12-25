@@ -15,7 +15,7 @@ const Submissions = () => {
     SubmissionService.getSubmissions(user.id)
       .then((response) => {
         const filteredSubmissions = response.data.filter(
-          (submission) => submission.advisorCheck === "UNCHECKED"
+          (submission) => submission.advisorCheck === "UNCHECKED" && submission.fileContent !== null
         );
         setSubmissions(filteredSubmissions);
       })
@@ -126,38 +126,7 @@ const Submissions = () => {
               Download
             </button>
           </p>
-          <p><strong>Date:</strong> {new Date(selectedSubmission.createdAt).toLocaleString()}</p>
-
-          <h4>Student Information</h4>
-          <p><strong>Full Name:</strong> {selectedSubmission.stdFullName}</p>
-          <p><strong>Student ID:</strong> {selectedSubmission.stdId}</p>
-          <p><strong>Phone Number:</strong> {selectedSubmission.phoneNumber}</p>
-          <p><strong>Birth Place and Date:</strong> {selectedSubmission.birthPlaceDate}</p>
-          <p><strong>Department:</strong> {selectedSubmission.department}</p>
-          <p><strong>Completed Credit:</strong> {selectedSubmission.completedCredit}</p>
-          <p><strong>GPA:</strong> {selectedSubmission.gpa}</p>
-          <p><strong>Internship Type:</strong> {selectedSubmission.internshipType}</p>
-          <p><strong>Voluntary or Mandatory:</strong> {selectedSubmission.voluntaryOrMandatory}</p>
-          <p><strong>Graduation Status:</strong> {selectedSubmission.graduationStatus}</p>
-          <p><strong>Summer School:</strong> {selectedSubmission.summerSchool}</p>
-          <p><strong>Description:</strong> {selectedSubmission.description}</p>
-
-          <h4>Company Information</h4>
-          <p><strong>Company Name:</strong> {selectedSubmission.companyName}</p>
-          <p><strong>Address:</strong> {selectedSubmission.address}</p>
-          <p><strong>Intern Department:</strong> {selectedSubmission.internDepartment}</p>
-          <p><strong>Start Date:</strong> {selectedSubmission.startDate}</p>
-          <p><strong>End Date:</strong> {selectedSubmission.endDate}</p>
-          <p><strong>Internship Days:</strong> {selectedSubmission.internshipDays}</p>
-          <p><strong>Company Phone Number:</strong> {selectedSubmission.companyPhoneNumber}</p>
-          <p><strong>Sector:</strong> {selectedSubmission.sector}</p>
-          <p><strong>Personnel Number:</strong> {selectedSubmission.personnelNumber}</p>
-          <p><strong>Department Personnel Number:</strong> {selectedSubmission.departmentPersonnelNumber}</p>
-          <p><strong>Department CENG Number:</strong> {selectedSubmission.departmentCENGNumber}</p>
-          <p><strong>Intern Advisor Full Name:</strong> {selectedSubmission.internAdvisorFullName}</p>
-          <p><strong>Intern Advisor Phone:</strong> {selectedSubmission.internAdvisorPhone}</p>
-          <p><strong>Intern Advisor Mail:</strong> {selectedSubmission.internAdvisorMail}</p>
-          <p><strong>Internship Topic:</strong> {selectedSubmission.internshipTopic}</p>
+          <p><strong>Date:</strong> {new Date(selectedSubmission.createdAt).toLocaleString()}</p>          
         </div>
       )}
       {isModalOpen && (

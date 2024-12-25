@@ -1,15 +1,14 @@
 package com.efemsepci.ims_backend.service;
 
+import com.efemsepci.ims_backend.entity.Student;
 import com.efemsepci.ims_backend.entity.Submission;
 import com.efemsepci.ims_backend.entity.User;
-import com.efemsepci.ims_backend.enums.InternshipStatus;
 import com.efemsepci.ims_backend.enums.SubmissionStatus;
 import com.efemsepci.ims_backend.repository.SubmissionRepository;
 import com.efemsepci.ims_backend.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -26,19 +25,19 @@ public class SubmissionService {
     @Autowired
     private UserRepository userRepository;
 
-    public Submission makeSubmission(Long senderId, Long receiverId, MultipartFile file, Map<String, String> formData) throws IOException {
+    public Submission makeSubmission(Long senderId, Long receiverId, Map<String, String> formData) throws IOException {
         User sender = userRepository.findById(senderId)
                 .orElseThrow(() -> new IllegalArgumentException("Sender not found"));
         User receiver = userRepository.findById(receiverId)
                 .orElseThrow(() -> new IllegalArgumentException("Receiver not found"));
 
         Submission submission = new Submission();
-        submission.setSender(sender);
+        submission.setSender((Student) sender);
         submission.setReceiver(receiver);
-        submission.setFileContent(file.getBytes());
 
         // Form verilerini atama
-        submission.setStdFullName(formData.get("stdFullName"));
+        submission.setStdName(formData.get("stdName"));
+        submission.setStdSurname(formData.get("stdSurname"));
         submission.setStdId(formData.get("stdId"));
         submission.setPhoneNumber(formData.get("phoneNumber"));
         submission.setBirthPlaceDate(formData.get("birthPlaceDate"));
@@ -92,6 +91,8 @@ public class SubmissionService {
         return submissionRepository.findBySender(sender);
     }
 
+    public Submission saveSubmission(Submission submission){ return submissionRepository.save(submission); }
+
     public void markAsCheckedAdvisor(Long submissionId) {
         Submission submission = submissionRepository.findById(submissionId)
                 .orElseThrow(() -> new IllegalArgumentException("Submission not found"));
@@ -103,7 +104,6 @@ public class SubmissionService {
     public void markAsCheckedSecretary(Long submissionId){
         Submission submission = submissionRepository.findById(submissionId)
                 .orElseThrow(() -> new IllegalArgumentException("Submission not found"));
-
         submission.setSecretaryCheck(SubmissionStatus.CHECKED);
         submissionRepository.save(submission);
     }

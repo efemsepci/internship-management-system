@@ -22,6 +22,19 @@ class DocumentsService {
       responseType: "blob",
     });
   }
+  generateDocuments(submissionId) {
+    return axios.get(DOCUMENTS_API_URL + "/generate/" + submissionId, {
+      responseType: "blob",
+    });
+  }
+  generateEvaluationDocument(evaluationId) {
+    return axios.get(
+      DOCUMENTS_API_URL + "/generate-evaluation/" + evaluationId,
+      {
+        responseType: "blob",
+      }
+    );
+  }
 }
 
 export default new DocumentsService();

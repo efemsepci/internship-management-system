@@ -54,8 +54,9 @@ public class InternshipController {
             @PathVariable Long id,
             @RequestParam(required = false) String isEvaluation,
             @RequestParam(required = false) String isReport,
-            @RequestParam(required = false) String grade) {
-        Internship updatedInternship = internshipService.updateInternship(id, isEvaluation, isReport, grade);
+            @RequestParam(required = false) String grade,
+            @RequestParam(required = false) String statusDescription) {
+        Internship updatedInternship = internshipService.updateInternship(id, isEvaluation, isReport, grade, statusDescription);
         return ResponseEntity.ok(updatedInternship);
     }
 }

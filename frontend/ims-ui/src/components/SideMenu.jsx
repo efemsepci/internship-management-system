@@ -18,11 +18,13 @@ const SideMenu = () => {
       <ul>
         {user.role === "ADVISOR" && <li><a href="/documents">Documents</a></li>}
         {user.role === "SECRETARY" && <li><a href="/documents">Documents</a></li>}
-        {user.role === "STUDENT" && <li><a href="/std-documents">Documents</a></li>}
+        {user.role === "STUDENT" && <li><a href="/std-documents">Generate Documents</a></li>}
         {user.role === "ADVISOR" && <li><a href="/submissions">Submissions</a></li>}
         {user.role === "SECRETARY" && <li><a href="/sec-submissions">Submissions</a></li>}
         {user.role === "ADVISOR" &&<li><a href="/evaluation">Evaluation</a></li>}
+        {user.role === "ADVISOR" && <li><a href="/internships">Internships</a></li>}
         {user.role === "STUDENT" && <li><a href="/make-submission">Make Submission</a></li>}
+        {user.role === "STUDENT" && <li><a href="/evaluation-form">Evaluation Form</a></li>}
         {user.role === "ADMIN" && <li><a href="/users">Users</a></li>}
         <li><a href="/messages">Messages</a></li>
       </ul>

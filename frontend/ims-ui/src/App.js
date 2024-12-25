@@ -10,7 +10,9 @@ import MessagesPage from "./components/MessagesPage";
 import MakeSubmission from "./components/MakeSubmission";
 import Submissions from "./components/Submissions";
 import SecretarySubmissions from "./components/SecretarySubmissions";
+import EvaluationForm from "./components/EvaluationForm";
 import Admin from "./components/Admin";
+import Internships from "./components/Internships";
 
 function App() {
   return (
@@ -32,7 +34,9 @@ function App() {
             path="/sec-submissions"
             element={<SecretarySubmissions />}
           ></Route>
+          <Route path="/evaluation-form" element={<EvaluationForm />}></Route>
           <Route path="/users" element={<Admin />}></Route>
+          <Route path="/internships" element={<Internships />}></Route>
         </Routes>
       </Layout>
     </Router>

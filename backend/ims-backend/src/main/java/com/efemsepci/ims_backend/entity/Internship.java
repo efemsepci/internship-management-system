@@ -1,9 +1,6 @@
 package com.efemsepci.ims_backend.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,8 +15,13 @@ public class Internship {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "student", nullable = false)
+    private Student student;
+
     //student information
-    private String stdFullName;
+    private String stdName;
+    private String stdSurname;
     private String stdId;
     private String phoneNumber;
     private String birthPlaceDate;
@@ -47,9 +49,11 @@ public class Internship {
     private String internAdvisorFullName;
     private String internAdvisorPhone;
     private String internAdvisorMail;
+    private String internAdvisorJob;
     private String internshipTopic;
 
     private String isEvaluationForm;
     private String isReport;
     private String grade;
+    private String statusDescription;
 }

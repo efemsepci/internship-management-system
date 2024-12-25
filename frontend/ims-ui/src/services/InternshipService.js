@@ -12,7 +12,7 @@ class InternshipService {
   createInternship(submissionId) {
     return axios.post(INTERNSHIP_API_URL + "/create/" + submissionId);
   }
-  updateInternship(id, isEvaluation, isReport, grade) {
+  updateInternship(id, isEvaluation, isReport, grade, statusDescription) {
     return axios.put(
       INTERNSHIP_API_URL +
         "/" +
@@ -22,7 +22,9 @@ class InternshipService {
         "&isReport=" +
         isReport +
         "&grade=" +
-        grade
+        grade +
+        "&statusDescription=" +
+        statusDescription
     );
   }
 }

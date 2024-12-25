@@ -3,19 +3,14 @@ import axios from "axios";
 const SUBMISSION_API_URL = "http://localhost:8080/api/submissions";
 
 class SubmissionService {
-  createSubmission(senderId, receiverId, file, formValues) {
+  createSubmission(senderId, receiverId, formValues) {
     const formData = new FormData();
 
     formData.append("senderId", senderId);
     formData.append("receiverId", receiverId);
-    formData.append("file", file);
     formData.append("formValues", JSON.stringify(formValues));
 
-    return axios.post(`${SUBMISSION_API_URL}/make`, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    return axios.post(SUBMISSION_API_URL + "/make", formData);
   }
 
   downloadFile(id) {
@@ -41,6 +36,15 @@ class SubmissionService {
   }
   deleteSubmission(id) {
     return axios.delete(SUBMISSION_API_URL + "/" + id);
+  }
+  completeSubmission(submissionId, file) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    return axios.post(
+      SUBMISSION_API_URL + "/complete/" + submissionId,
+      formData
+    );
   }
 }
 

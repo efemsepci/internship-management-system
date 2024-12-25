@@ -29,4 +29,7 @@ public class DocumentsService {
     public void deleteDocument(Long id) {
         documentsRepository.deleteById(id);
     }
+
+    public Documents getDocumentByName(String name) {return documentsRepository.findByFileName(name);}
+
 }

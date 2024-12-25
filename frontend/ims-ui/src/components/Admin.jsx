@@ -11,7 +11,7 @@ const Admin = () => {
     surname: "",
     email: "",
     password: "",
-    role: "ADVISOR"
+    role: ""
   });
   const [userToDelete, setUserToDelete] = useState(null);
 
@@ -79,7 +79,7 @@ const Admin = () => {
           {users.map((user) => (
             <li key={user.id}>
               {user.name} {user.surname} - {user.role}{" "}
-              {user.id === loginedUser.id && <button onClick={() => setUserToDelete(user.id)}>Delete</button>}
+              {user.id !== loginedUser.id && <button onClick={() => setUserToDelete(user.id)}>Delete</button>}
             </li>
           ))}
         </ul>

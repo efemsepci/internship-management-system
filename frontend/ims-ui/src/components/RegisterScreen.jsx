@@ -24,22 +24,32 @@ const RegisterScreen = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const tempUser = UserService.getUserByEmail(formData.email);
-    if(tempUser === null){
-      const user = { ...formData, role, internshipStatus };
-      try {
+
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@std\.yeditepe\.edu\.tr$/;
+    if (!emailPattern.test(formData.email)) {
+      alert("Please enter a valid email address with the '@std.yeditepe.edu.tr'");
+      return;
+    }
+  
+    try {
+      const tempUser = await UserService.getUserByEmail(formData.email);
+      console.log(tempUser);
+  
+      if (tempUser.data === '') {
+        const user = { ...formData, role, internshipStatus };
         const createResponse = await UserService.createStudent(user);
+        
         sessionStorage.setItem("user", JSON.stringify(createResponse.data));
         navigate('/documents');
-      } catch (err) {
-        console.error("Error creating user:", err);
-        alert("Registration failed!");
-  }
-    }
-    else{
-      alert("Already Registered!!!")
+      } else {
+        alert("Already Registered!!!");
+      }
+    } catch (err) {
+      console.error("Error during registration:", err);
+      alert("Registration failed!");
     }
   };
+  
   
   
 

@@ -18,7 +18,9 @@ public class InternshipService {
     public Internship createInternship(Submission submission) {
         Internship internship = new Internship();
 
-        internship.setStdFullName(submission.getStdFullName());
+        internship.setStudent(submission.getSender());
+        internship.setStdName(submission.getStdName());
+        internship.setStdSurname(submission.getStdSurname());
         internship.setStdId(submission.getStdId());
         internship.setPhoneNumber(submission.getPhoneNumber());
         internship.setBirthPlaceDate(submission.getBirthPlaceDate());
@@ -45,11 +47,13 @@ public class InternshipService {
         internship.setInternAdvisorFullName(submission.getInternAdvisorFullName());
         internship.setInternAdvisorPhone(submission.getInternAdvisorPhone());
         internship.setInternAdvisorMail(submission.getInternAdvisorMail());
+        internship.setInternAdvisorJob(submission.getInternAdvisorJob());
         internship.setInternshipTopic(submission.getInternshipTopic());
 
         internship.setIsEvaluationForm(null);
         internship.setIsReport(null);
         internship.setGrade(null);
+        internship.setStatusDescription(null);
 
         return internshipRepository.save(internship);
     }
@@ -62,7 +66,7 @@ public class InternshipService {
         return internshipRepository.findAll();
     }
 
-    public Internship updateInternship(Long id, String isEvaluation, String isReport, String grade){
+    public Internship updateInternship(Long id, String isEvaluation, String isReport, String grade, String statusDescription){
         Internship internship = internshipRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("Internship not exist!"));
         if (isEvaluation != null) {
@@ -76,6 +80,9 @@ public class InternshipService {
         }
         if (grade != null) {
             internship.setGrade(grade);
+        }
+        if (statusDescription != null) {
+            internship.setStatusDescription(statusDescription);
         }
         return internshipRepository.save(internship);
     }

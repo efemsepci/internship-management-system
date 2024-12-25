@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DocumentsRepository extends JpaRepository<Documents, Long> {
+    Documents findByFileName(String name);
 }

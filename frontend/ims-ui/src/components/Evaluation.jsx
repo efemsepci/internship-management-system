@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../style/evaluation.css';
 import InternshipService from '../services/InternshipService';
 
 const Evaluation = () => {
-  const [pdfFile, setPdfFile] = useState(null);
-  const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [internships, setInternShips] = useState([]);
   const [reload, setReload] = useState(false);
 
@@ -26,38 +23,6 @@ const Evaluation = () => {
       });
   }, [reload]);
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    if (file && file.type === 'application/pdf') {
-      setPdfFile(file);
-      setIsFileUploaded(true);
-    } else {
-      alert('Lütfen bir PDF dosyası yükleyin.');
-    }
-  };
-
-  const handleFileUpload = async () => {
-    if (!pdfFile) {
-      alert('Lütfen önce bir PDF dosyası yükleyin.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('file', pdfFile);
-
-    try {
-      const response = await axios.post('http://localhost:5000/upload', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      alert('File uploaded!');
-      console.log('Response:', response.data);
-    } catch (error) {
-      console.error('Dosya yükleme hatası:', error);
-      alert('Upload failed!');
-    }
-  };
 
   const handleDropdownChange = (id, dropdownName, value) => {
     setInternShips((prevData) =>
@@ -67,21 +32,36 @@ const Evaluation = () => {
     );
   };
 
+  const handleInputChange = (id, value) => {
+    setInternShips((prevData) =>
+      prevData.map((row) =>
+        row.id === id ? { ...row, statusDescription: value } : row
+      )
+    );
+  };
+
   const handleButtonClick = (id) => {
     const internship = internships.find((item) => item.id === id);
-
     if (!internship) {
       alert('Invalid internship ID');
       return;
     }
 
-    const { isEvaluationForm, isReport, grade } = internship;
+    const { isEvaluationForm, isReport, grade, statusDescription } = internship;
+    console.log('Internship data:', internship);
 
-    InternshipService.updateInternship(id, isEvaluationForm, isReport, grade)
+    if(isEvaluationForm === 'No' || isReport === 'No'){
+      if(grade === 'P'){
+        alert('You can not give P grade if there is no report or evaluation form!');
+        return;
+      }
+    }
+      
+    InternshipService.updateInternship(id, isEvaluationForm, isReport, grade, statusDescription)
       .then((response) => {
         console.log("Updated successfully", response);
         alert('Internship updated successfully!');
-        setReload(!reload); // Refresh data after update
+        setReload(!reload); 
       })
       .catch((error) => {
         console.error('Error updating internship:', error);
@@ -90,21 +70,6 @@ const Evaluation = () => {
   };
 
   return (
-    <div className="pdf-upload-container">
-      <h2>Internship Evaluation</h2>
-      <div className="pdf-upload">
-        <input
-          type="file"
-          accept="application/pdf"
-          onChange={handleFileChange}
-        />
-        {isFileUploaded && <p>Yüklenen PDF: {pdfFile.name}</p>}
-      </div>
-      <div className='upload-button'>
-        <button onClick={handleFileUpload} className="upload-button">
-          Upload PDF
-        </button>
-      </div>
       <div className="table-container">
         <table border="1">
           <thead>
@@ -117,6 +82,7 @@ const Evaluation = () => {
               <th>Evaluation Form</th>
               <th>Report</th>
               <th>Grade</th>
+              <th>Status Description</th>
               <th>Submit</th>
             </tr>
           </thead>
@@ -166,6 +132,14 @@ const Evaluation = () => {
                   </select>
                 </td>
                 <td>
+                <input
+                  type="text"
+                  value={internship.statusDescription} 
+                  onChange={(e) => handleInputChange(internship.id, e.target.value)} 
+                  placeholder="Enter description"
+                />
+                </td>
+                <td>
                   <button onClick={() => handleButtonClick(internship.id)}>
                     Submit
                   </button>
@@ -175,7 +149,6 @@ const Evaluation = () => {
           </tbody>
         </table>
       </div>
-    </div>
   );
 };
 

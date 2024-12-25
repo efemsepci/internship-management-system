@@ -21,7 +21,7 @@ public class Submission {
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
-    private User sender;
+    private Student sender;
 
     @ManyToOne
     @JoinColumn(name = "receiver_id", nullable = false)
@@ -44,7 +44,8 @@ public class Submission {
     private SubmissionStatus secretaryCheck;
 
     //student information
-    private String stdFullName;
+    private String stdName;
+    private String stdSurname;
     private String stdId;
     private String phoneNumber;
     private String birthPlaceDate;
@@ -72,6 +73,7 @@ public class Submission {
     private String internAdvisorFullName;
     private String internAdvisorPhone;
     private String internAdvisorMail;
+    private String internAdvisorJob;
     private String internshipTopic;
 
 }

@@ -29,14 +29,21 @@ public class SubmissionController {
     public ResponseEntity<Submission> makeSubmission(
             @RequestParam("senderId") Long senderId,
             @RequestParam("receiverId") Long receiverId,
-            @RequestPart("file") MultipartFile file,
             @RequestPart("formValues") String formValuesJson) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, String> formValues = objectMapper.readValue(formValuesJson, new TypeReference<Map<String, String>>() {});
 
-        Submission submission = submissionService.makeSubmission(senderId, receiverId, file, formValues);
+        Submission submission = submissionService.makeSubmission(senderId, receiverId, formValues);
         return ResponseEntity.ok(submission);
+    }
+
+    @PostMapping("/complete/{submissionId}")
+    public ResponseEntity<String> completeSubmission(@PathVariable Long submissionId, @RequestParam("file") MultipartFile file) throws IOException {
+        Submission completedSubmission = submissionService.getSubmissionById(submissionId).orElse(null);
+        completedSubmission.setFileContent(file.getBytes());
+        submissionService.saveSubmission(completedSubmission);
+        return ResponseEntity.ok("File uploaded!");
     }
 
     @PostMapping("/{submissionId}/advisor")

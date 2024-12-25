@@ -53,8 +53,6 @@ public class UserController {
     }
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Map<String,Boolean>> deleteUser(@PathVariable Long id) {
-        submissionService.deleteSubmissionsForUser(id);
-        messageService.deleteMessagesForUser(id);
         return userService.deleteUserById(id);
     }
     @GetMapping("/users/role/{role}")
