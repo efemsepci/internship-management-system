@@ -1,7 +1,7 @@
 .documents-container {
   text-align: center;
   padding: 20px;
-  background-color: #0839AE;
+  background-color: #0839ae;
   min-height: 100vh;
 }
 
@@ -157,4 +157,3 @@
 .delete-holiday-btn:hover {
   background-color: #c0392b;
 }
-

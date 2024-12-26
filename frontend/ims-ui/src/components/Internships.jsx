@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import InternshipService from "../services/InternshipService";
 import "../style/internships.css";
 
 const Internships = () => {
   const [internships, setInternships] = useState([]);
   const [filters, setFilters] = useState({
-    companyName: '',
-    year: '',
+    companyName: "",
+    year: "",
   });
 
   useEffect(() => {
@@ -15,23 +15,22 @@ const Internships = () => {
 
   const loadInternships = () => {
     InternshipService.getInternships()
-        .then((response) => setInternships(response.data))
-        .catch((error) => console.error("Error fetching internships:", error));
-  }
+      .then((response) => setInternships(response.data))
+      .catch((error) => console.error("Error fetching internships:", error));
+  };
   const handleFilterChange = (e) => {
     const { name, value } = e.target;
     setFilters({ ...filters, [name]: value });
   };
 
-  const filteredInternships = internships.filter(
-    (internship) => {
-      const internshipYear = internship.startDate.split('-')[0];
-      return (
-        (filters.companyName === '' || internship.companyName.includes(filters.companyName)) &&
-        (filters.year === '' || internshipYear === filters.year)
-      );
-    }
-  );
+  const filteredInternships = internships.filter((internship) => {
+    const internshipYear = internship.startDate.split("-")[0];
+    return (
+      (filters.companyName === "" ||
+        internship.companyName.includes(filters.companyName)) &&
+      (filters.year === "" || internshipYear === filters.year)
+    );
+  });
 
   return (
     <div className="internship-list-container">

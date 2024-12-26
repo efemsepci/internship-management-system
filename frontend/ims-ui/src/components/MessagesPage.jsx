@@ -1,20 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import '../style/messagesPages.css';
-import MessageService from '../services/MessageService';
-import UserService from '../services/UserService';
+import React, { useState, useEffect } from "react";
+import "../style/messagesPages.css";
+import MessageService from "../services/MessageService";
+import UserService from "../services/UserService";
 
 const MessagesPage = () => {
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
-  const [replyText, setReplyText] = useState('');
+  const [replyText, setReplyText] = useState("");
   const [isNewMessageModalOpen, setIsNewMessageModalOpen] = useState(false);
   const [isOldMessagesModalOpen, setIsOldMessagesModalOpen] = useState(false);
-  const [newMessage, setNewMessage] = useState('');
-  const [selectedUser, setSelectedUser] = useState('');
+  const [newMessage, setNewMessage] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
   const [users, setUsers] = useState([]);
   const [oldMessages, setOldMessages] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
-  const user = JSON.parse(sessionStorage.getItem('user'));
+  const [searchQuery, setSearchQuery] = useState("");
+  const user = JSON.parse(sessionStorage.getItem("user"));
 
   useEffect(() => {
     MessageService.getUnreadMessages(user.id)
@@ -22,54 +22,51 @@ const MessagesPage = () => {
         setMessages(response.data);
       })
       .catch((error) => {
-        console.error('Error, can not load messages!', error);
+        console.error("Error, can not load messages!", error);
       });
 
-    if(user.role === 'ADMIN'){
+    if (user.role === "ADMIN") {
       UserService.getUsers()
-      .then((response) => {
-        setUsers(response.data);
-      })
-      .catch((error) => {
-        console.error('Error, can not load users!', error);
-      });
-    }
-    else if(user.role === 'ADVISOR'){
+        .then((response) => {
+          setUsers(response.data);
+        })
+        .catch((error) => {
+          console.error("Error, can not load users!", error);
+        });
+    } else if (user.role === "ADVISOR") {
       Promise.all([
-        UserService.getUserByRole('STUDENT'),
-        UserService.getUserByRole('SECRETARY')
+        UserService.getUserByRole("STUDENT"),
+        UserService.getUserByRole("SECRETARY"),
       ])
-      .then(([studentResponse, secretaryResponse]) => {
-        const allUsers = [...studentResponse.data, ...secretaryResponse.data];
-        setUsers(allUsers);
-      })
-      .catch((error) => {
-        console.error('Error fetching users:', error);
-      });
-    }
-    else if(user.role === 'SECRETARY'){
-      UserService.getUserByRole('ADVISOR')
-      .then((response) => {
-        setUsers(response.data);
-      })
-      .catch((error) => {
-        console.error('Error, can not load users!', error);
-      })
-    }
-    else if(user.role === 'STUDENT'){
-      UserService.getUserByRole('ADVISOR')
-      .then((response) => {
-        setUsers(response.data);
-      })
-      .catch((error) => {
-        console.error('Error, can not load users!', error);
-      })
+        .then(([studentResponse, secretaryResponse]) => {
+          const allUsers = [...studentResponse.data, ...secretaryResponse.data];
+          setUsers(allUsers);
+        })
+        .catch((error) => {
+          console.error("Error fetching users:", error);
+        });
+    } else if (user.role === "SECRETARY") {
+      UserService.getUserByRole("ADVISOR")
+        .then((response) => {
+          setUsers(response.data);
+        })
+        .catch((error) => {
+          console.error("Error, can not load users!", error);
+        });
+    } else if (user.role === "STUDENT") {
+      UserService.getUserByRole("ADVISOR")
+        .then((response) => {
+          setUsers(response.data);
+        })
+        .catch((error) => {
+          console.error("Error, can not load users!", error);
+        });
     }
   }, [user.id]);
 
   const handleMessageClick = (message) => {
     setSelectedMessage(message);
-    setReplyText('');
+    setReplyText("");
   };
 
   const handleReplyChange = (e) => {
@@ -84,15 +81,15 @@ const MessagesPage = () => {
         replyText
       )
         .then(() => {
-          setReplyText('');
+          setReplyText("");
           setSelectedMessage(null);
           MessageService.markAsRead(selectedMessage.id);
         })
         .catch((error) => {
-          console.error('Error, can not send reply!', error);
+          console.error("Error, can not send reply!", error);
         });
     } else {
-      alert('Please write a reply!');
+      alert("Please write a reply!");
     }
   };
 
@@ -100,15 +97,15 @@ const MessagesPage = () => {
     if (selectedUser && newMessage.trim()) {
       MessageService.sendMessage(user.id, selectedUser, newMessage)
         .then(() => {
-          setNewMessage('');
-          setSelectedUser('');
+          setNewMessage("");
+          setSelectedUser("");
           setIsNewMessageModalOpen(false);
         })
         .catch((error) => {
-          console.error('Error, can not send message!', error);
+          console.error("Error, can not send message!", error);
         });
     } else {
-      alert('Please select a user and write a message!');
+      alert("Please select a user and write a message!");
     }
   };
 
@@ -119,10 +116,10 @@ const MessagesPage = () => {
           setOldMessages(response.data);
         })
         .catch((error) => {
-          console.error('Error, can not fetch old messages!', error);
+          console.error("Error, can not fetch old messages!", error);
         });
     } else {
-      alert('Please select a user!');
+      alert("Please select a user!");
     }
   };
 
@@ -151,7 +148,7 @@ const MessagesPage = () => {
           New Message
         </button>
         <button
-          style={{marginLeft: 10}}
+          style={{ marginLeft: 10 }}
           onClick={() => setIsOldMessagesModalOpen(true)}
           className="new-old-message-btn"
         >
@@ -235,17 +232,20 @@ const MessagesPage = () => {
               ))}
             </select>
             <div className="modal-buttons">
-            <button onClick={handleFetchOldMessages}>Show Messages</button>
-            <ul>
-              {oldMessages.map((message) => (
-                <li key={message.id}>
-                  <strong>{message.createdAt} {message.sender.name}:</strong> {message.content}
-                </li>
-              ))}
-            </ul>
-            <button onClick={() => setIsOldMessagesModalOpen(false)}>
-              Close
-            </button>
+              <button onClick={handleFetchOldMessages}>Show Messages</button>
+              <ul>
+                {oldMessages.map((message) => (
+                  <li key={message.id}>
+                    <strong>
+                      {message.createdAt} {message.sender.name}:
+                    </strong>{" "}
+                    {message.content}
+                  </li>
+                ))}
+              </ul>
+              <button onClick={() => setIsOldMessagesModalOpen(false)}>
+                Close
+              </button>
             </div>
           </div>
         </div>

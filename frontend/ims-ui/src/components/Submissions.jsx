@@ -15,7 +15,9 @@ const Submissions = () => {
     SubmissionService.getSubmissions(user.id)
       .then((response) => {
         const filteredSubmissions = response.data.filter(
-          (submission) => submission.advisorCheck === "UNCHECKED" && submission.fileContent !== null
+          (submission) =>
+            submission.advisorCheck === "UNCHECKED" &&
+            submission.fileContent !== null
         );
         setSubmissions(filteredSubmissions);
       })
@@ -23,7 +25,7 @@ const Submissions = () => {
         console.error("Error fetching submissions:", error);
       });
   }, [user.id, reload]);
-  
+
   const handleDownload = (submissionId) => {
     SubmissionService.downloadFile(submissionId)
       .then((response) => {
@@ -41,12 +43,12 @@ const Submissions = () => {
   };
   const handleSubmissionClick = (submission) => {
     setSelectedSubmission(submission);
-    console.log(submission.stdFullName)
+    console.log(submission.stdFullName);
   };
   const handleAcceptClick = (submission) => {
     SubmissionService.advisorApprove(submission.id)
       .then(() => {
-        setReload((prev) => !prev); 
+        setReload((prev) => !prev);
       })
       .catch((error) => {
         console.error("Error approving submission:", error);
@@ -68,12 +70,16 @@ const Submissions = () => {
       alert("Please provide a reason for declining!");
       return;
     }
-    MessageService.sendMessage(user.id, selectedSubmission.sender.id, declineMessage)
+    MessageService.sendMessage(
+      user.id,
+      selectedSubmission.sender.id,
+      declineMessage
+    )
       .then(() => {
-        setDeclineMessage("")
+        setDeclineMessage("");
       })
       .catch((error) => {
-        console.error('Error, can not send message!', error);
+        console.error("Error, can not send message!", error);
       });
 
     SubmissionService.deleteSubmission(selectedSubmission.id)
@@ -105,11 +111,24 @@ const Submissions = () => {
           </thead>
           <tbody>
             {submissions.map((submission) => (
-              <tr key={submission.id} onClick={() => handleSubmissionClick(submission)}>
-                <td>{submission.sender.name} {submission.sender.surname}</td>
+              <tr
+                key={submission.id}
+                onClick={() => handleSubmissionClick(submission)}
+              >
+                <td>
+                  {submission.sender.name} {submission.sender.surname}
+                </td>
                 <td>{new Date(submission.createdAt).toLocaleString()}</td>
-                <td><button onClick={() => handleAcceptClick(submission)}>Accept</button></td>
-                <td><button onClick={() => handleDeclineClick(submission)}>Decline</button></td>
+                <td>
+                  <button onClick={() => handleAcceptClick(submission)}>
+                    Accept
+                  </button>
+                </td>
+                <td>
+                  <button onClick={() => handleDeclineClick(submission)}>
+                    Decline
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -118,15 +137,30 @@ const Submissions = () => {
       {selectedSubmission && (
         <div className="submission-details">
           <h3>Submission Details</h3>
-          <p><strong>ID:</strong> {selectedSubmission.id}</p>
-          <p><strong>Sender:</strong> {selectedSubmission.sender.name} {selectedSubmission.sender.surname}</p>
-          <p><strong>Receiver:</strong> {selectedSubmission.receiver.name} {selectedSubmission.receiver.surname}</p>
-          <p><strong>File:</strong> 
-            <button className="download-btn" onClick={() => handleDownload(selectedSubmission.id)}>
+          <p>
+            <strong>ID:</strong> {selectedSubmission.id}
+          </p>
+          <p>
+            <strong>Sender:</strong> {selectedSubmission.sender.name}{" "}
+            {selectedSubmission.sender.surname}
+          </p>
+          <p>
+            <strong>Receiver:</strong> {selectedSubmission.receiver.name}{" "}
+            {selectedSubmission.receiver.surname}
+          </p>
+          <p>
+            <strong>File:</strong>
+            <button
+              className="download-btn"
+              onClick={() => handleDownload(selectedSubmission.id)}
+            >
               Download
             </button>
           </p>
-          <p><strong>Date:</strong> {new Date(selectedSubmission.createdAt).toLocaleString()}</p>          
+          <p>
+            <strong>Date:</strong>{" "}
+            {new Date(selectedSubmission.createdAt).toLocaleString()}
+          </p>
         </div>
       )}
       {isModalOpen && (
@@ -138,8 +172,12 @@ const Submissions = () => {
               onChange={(e) => setDeclineMessage(e.target.value)}
               placeholder="Provide a reason for declining..."
             ></textarea>
-            <button className="modal-btn" onClick={handleConfirmDecline}>Confirm</button>
-            <button className="modal-btn cancel" onClick={handleModalClose}>Cancel</button>
+            <button className="modal-btn" onClick={handleConfirmDecline}>
+              Confirm
+            </button>
+            <button className="modal-btn cancel" onClick={handleModalClose}>
+              Cancel
+            </button>
           </div>
         </div>
       )}

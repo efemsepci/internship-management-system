@@ -4,14 +4,16 @@ import "../style/submissions.css";
 import InternshipService from "../services/InternshipService";
 
 const SecretarySubmissions = () => {
-  const [submissions, setSubmissions] = useState([]); 
-  const [reload, setReload] = useState(false); 
+  const [submissions, setSubmissions] = useState([]);
+  const [reload, setReload] = useState(false);
 
   useEffect(() => {
     SubmissionService.getAllSubmissions()
       .then((response) => {
         const filteredSubmissions = response.data.filter(
-          (submission) => submission.secretaryCheck === "UNCHECKED" && submission.advisorCheck === "CHECKED"
+          (submission) =>
+            submission.secretaryCheck === "UNCHECKED" &&
+            submission.advisorCheck === "CHECKED"
         );
         setSubmissions(filteredSubmissions);
       })
@@ -23,7 +25,7 @@ const SecretarySubmissions = () => {
   const handleAcceptClick = (submissionId) => {
     SubmissionService.secretaryApprove(submissionId)
       .then(() => {
-        InternshipService.createInternship(submissionId)
+        InternshipService.createInternship(submissionId);
         SubmissionService.deleteSubmission(submissionId);
         setReload((prev) => !prev);
       })

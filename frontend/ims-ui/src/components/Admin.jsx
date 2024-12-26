@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserService from "../services/UserService";
-import '../style/admin.css'
+import "../style/admin.css";
 
 const Admin = () => {
   const loginedUser = JSON.parse(sessionStorage.getItem("user"));
@@ -11,7 +11,7 @@ const Admin = () => {
     surname: "",
     email: "",
     password: "",
-    role: ""
+    role: "",
   });
   const [userToDelete, setUserToDelete] = useState(null);
 
@@ -32,34 +32,62 @@ const Admin = () => {
   const handleCreateUserSubmit = (e) => {
     e.preventDefault();
     const { name, surname, role, password, email } = newUser;
-    const department = 'CSE';
-    if(newUser.role === 'ADMIN'){
-        UserService.createAdmin({name, surname, role, password, email})
-            .then(() => {
-                loadUsers();
-                setShowCreateUserForm(false);
-                setNewUser({name: "", surname: "", role: "", password: "", email: ""})
-            })
-            .catch((error) => console.error("Error creating admin:", error))
+    const department = "CSE";
+    if (newUser.role === "ADMIN") {
+      UserService.createAdmin({ name, surname, role, password, email })
+        .then(() => {
+          loadUsers();
+          setShowCreateUserForm(false);
+          setNewUser({
+            name: "",
+            surname: "",
+            role: "",
+            password: "",
+            email: "",
+          });
+        })
+        .catch((error) => console.error("Error creating admin:", error));
+    } else if (newUser.role === "ADVISOR") {
+      UserService.createAdvisor({
+        name,
+        surname,
+        role,
+        password,
+        email,
+        department,
+      })
+        .then(() => {
+          loadUsers();
+          setShowCreateUserForm(false);
+          setNewUser({
+            name: "",
+            surname: "",
+            role: "",
+            password: "",
+            email: "",
+          });
+        })
+        .catch((error) => console.error("Error creating advisor:", error));
+    } else if (newUser.role === "SECRETARY") {
+      UserService.createSecretary({
+        name,
+        surname,
+        role,
+        password,
+        email,
+        department,
+      }).then(() => {
+        loadUsers();
+        setShowCreateUserForm(false);
+        setNewUser({
+          name: "",
+          surname: "",
+          role: "",
+          password: "",
+          email: "",
+        });
+      });
     }
-    else if(newUser.role === 'ADVISOR'){
-        UserService.createAdvisor({name, surname, role, password, email, department})
-            .then(() => {
-                loadUsers();
-                setShowCreateUserForm(false);
-                setNewUser({name: "", surname: "", role: "", password: "", email: ""})
-            })
-            .catch((error) => console.error("Error creating advisor:", error))
-    }
-    else if(newUser.role === 'SECRETARY'){
-        UserService.createSecretary({name, surname, role, password, email, department})
-            .then(() => {
-                loadUsers();
-                setShowCreateUserForm(false);
-                setNewUser({name: "", surname: "", role: "", password: "", email: ""})
-            })
-    }
-    
   };
 
   const handleDeleteUser = (id) => {
@@ -79,7 +107,9 @@ const Admin = () => {
           {users.map((user) => (
             <li key={user.id}>
               {user.name} {user.surname} - {user.role}{" "}
-              {user.id !== loginedUser.id && <button onClick={() => setUserToDelete(user.id)}>Delete</button>}
+              {user.id !== loginedUser.id && (
+                <button onClick={() => setUserToDelete(user.id)}>Delete</button>
+              )}
             </li>
           ))}
         </ul>
@@ -102,32 +132,41 @@ const Admin = () => {
               type="text"
               placeholder="Surname"
               value={newUser.surname}
-              onChange={(e) => setNewUser({ ...newUser, surname: e.target.value })}
+              onChange={(e) =>
+                setNewUser({ ...newUser, surname: e.target.value })
+              }
               required
             />
             <input
               type="email"
               placeholder="Email"
               value={newUser.email}
-              onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+              onChange={(e) =>
+                setNewUser({ ...newUser, email: e.target.value })
+              }
               required
             />
             <input
               type="password"
               placeholder="Password"
               value={newUser.password}
-              onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+              onChange={(e) =>
+                setNewUser({ ...newUser, password: e.target.value })
+              }
               required
             />
             <select
               value={newUser.role}
               onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
             >
+              <option value="">---Select Role---</option>
               <option value="ADVISOR">Advisor</option>
               <option value="SECRETARY">Secretary</option>
               <option value="ADMIN">Admin</option>
             </select>
-            <button type="submit" onClick={handleCreateUserSubmit}>Create User</button>
+            <button type="submit" onClick={handleCreateUserSubmit}>
+              Create User
+            </button>
             <button type="button" onClick={toggleCreateUserForm}>
               Close
             </button>
@@ -140,10 +179,16 @@ const Admin = () => {
           <div className="modal-content">
             <h4>Are you sure you want to delete this user?</h4>
             <div className="modal-buttons">
-              <button className="confirm-btn" onClick={() => handleDeleteUser(userToDelete)}>
+              <button
+                className="confirm-btn"
+                onClick={() => handleDeleteUser(userToDelete)}
+              >
                 Yes
               </button>
-              <button className="cancel-btn" onClick={() => setUserToDelete(null)}>
+              <button
+                className="cancel-btn"
+                onClick={() => setUserToDelete(null)}
+              >
                 No
               </button>
             </div>

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.LocalDateTime;
 
@@ -20,11 +22,13 @@ public class Submission {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
+    @JoinColumn(name = "sender_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Student sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
+    @JoinColumn(name = "receiver_id", nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private User receiver;
 
     @Lob

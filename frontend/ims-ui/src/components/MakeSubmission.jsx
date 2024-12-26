@@ -5,7 +5,7 @@ import "../style/makeSubmission.css";
 
 const MakeSubmission = () => {
   const [file, setFile] = useState(null);
-  const [reload, setReload] = useState(false); 
+  const [reload, setReload] = useState(false);
   const user = JSON.parse(sessionStorage.getItem("user"));
 
   const handleFileChange = (e) => {
@@ -24,20 +24,23 @@ const MakeSubmission = () => {
         const submissionId = response.data[0].id;
         console.log(submissionId);
         SubmissionService.completeSubmission(submissionId, file)
-                .then(() => {
-                    console.log("File uploaded successfully for submission:", submissionId);
-                    alert("Submission and file upload successful!");
-                    setReload((prev) => !prev);
-                })
-                .catch((error) => {
-                    console.error("Error uploading file for submission:", error);
-                    alert("Error uploading file. Please try again.");
-                });
-    })
-    .catch((error) => {
-      console.error("Error submitting submission data:", error);
-      alert("Error submitting pdf. Please fill forms before!");
-  });
+          .then(() => {
+            console.log(
+              "File uploaded successfully for submission:",
+              submissionId
+            );
+            alert("Submission and file upload successful!");
+            setReload((prev) => !prev);
+          })
+          .catch((error) => {
+            console.error("Error uploading file for submission:", error);
+            alert("Error uploading file. Please try again.");
+          });
+      })
+      .catch((error) => {
+        console.error("Error submitting submission data:", error);
+        alert("Error submitting pdf. Please fill forms before!");
+      });
   };
 
   return (
@@ -47,7 +50,12 @@ const MakeSubmission = () => {
         <h3>File</h3>
         <div className="form-group">
           <label>Upload Internship Documents (.pdf)</label>
-          <input type="file" accept=".pdf" onChange={handleFileChange} required />
+          <input
+            type="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+            required
+          />
           {file && <p>Selected File: {file.name}</p>}
         </div>
 

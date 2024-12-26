@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Data
@@ -16,7 +18,8 @@ public class Internship {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "student", nullable = false)
+    @JoinColumn(name = "student", nullable = true)
+    @OnDelete(action = OnDeleteAction.SET_NULL)
     private Student student;
 
     //student information

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import EvaluationService from '../services/EvaluationService';
-import DocumentsService from '../services/DocumentsService';
-import "../style/makeSubmission.css"
+import React, { useState } from "react";
+import EvaluationService from "../services/EvaluationService";
+import DocumentsService from "../services/DocumentsService";
+import "../style/makeSubmission.css";
 
 const EvaluationForm = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +20,7 @@ const EvaluationForm = () => {
     internshipPlace: "",
     companySize: "",
     evaluations: Array(20).fill(),
-    questions: Array(3).fill(), 
+    questions: Array(3).fill(),
     opinion: "",
   });
 
@@ -40,31 +40,31 @@ const EvaluationForm = () => {
   const handleQuestionsChange = (index, value) => {
     const updatedQuestions = [...formData.questions];
     updatedQuestions[index] = value;
-    setFormData({...formData, questions: updatedQuestions});
-  }
+    setFormData({ ...formData, questions: updatedQuestions });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const evaluation = {
-        userId : user.id,
-        companyName: formData.companyName,
-        sector: formData.sector,
-        address: formData.address,
-        internAdvisorFullName: formData.internAdvisorFullName,
-        internAdvisorJob: formData.internAdvisorJob,
-        internAdvisorPhone: formData.internAdvisorPhone,
-        internAdvisorMail: formData.internAdvisorMail,
-        departmentCENGNumber: formData.departmentCENGNumber,
-        stdName: formData.stdName,
-        stdSurname: formData.stdSurname,
-        internDepartment: formData.internDepartment,
-        workDone: formData.workDone,
-        internshipPlace: formData.internshipPlace,
-        companySize: formData.companySize,
-        evaluations: formData.evaluations,
-        questions: formData.questions, 
-        opinion: formData.opinion,
-    }
+      userId: user.id,
+      companyName: formData.companyName,
+      sector: formData.sector,
+      address: formData.address,
+      internAdvisorFullName: formData.internAdvisorFullName,
+      internAdvisorJob: formData.internAdvisorJob,
+      internAdvisorPhone: formData.internAdvisorPhone,
+      internAdvisorMail: formData.internAdvisorMail,
+      departmentCENGNumber: formData.departmentCENGNumber,
+      stdName: formData.stdName,
+      stdSurname: formData.stdSurname,
+      internDepartment: formData.internDepartment,
+      workDone: formData.workDone,
+      internshipPlace: formData.internshipPlace,
+      companySize: formData.companySize,
+      evaluations: formData.evaluations,
+      questions: formData.questions,
+      opinion: formData.opinion,
+    };
     try {
       await EvaluationService.createEvaluation(evaluation);
       alert("Evaluation submitted successfully!");
@@ -74,26 +74,28 @@ const EvaluationForm = () => {
     }
 
     const evaluationToBeForm = await EvaluationService.getByUserId(user.id);
-        console.log(evaluationToBeForm.data[0]);
-        if (evaluationToBeForm && evaluationToBeForm.data.length > 0) {
-            const evaluationId = evaluationToBeForm.data[0].id; 
-     
-            const response = await DocumentsService.generateEvaluationDocument(evaluationId);
-            if (response && response.data) {
-                const blob = new Blob([response.data], { type: "application/pdf" });
-                const url = window.URL.createObjectURL(blob);
-                const link = document.createElement("a");
-                link.href = url;
-                link.download = "evaluation_form.pdf"; 
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-    
-                console.log("File downloaded successfully!");
-            } else {
-                console.error("Failed to generate documents or no data received.");
-            }
-        }
+    console.log(evaluationToBeForm.data[0]);
+    if (evaluationToBeForm && evaluationToBeForm.data.length > 0) {
+      const evaluationId = evaluationToBeForm.data[0].id;
+
+      const response = await DocumentsService.generateEvaluationDocument(
+        evaluationId
+      );
+      if (response && response.data) {
+        const blob = new Blob([response.data], { type: "application/pdf" });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = "evaluation_form.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        console.log("File downloaded successfully!");
+      } else {
+        console.error("Failed to generate documents or no data received.");
+      }
+    }
   };
 
   const evaluationCriteria = [
@@ -204,7 +206,10 @@ const EvaluationForm = () => {
           </div>
 
           <div className="form-group">
-            <label>Şirketinizde/Kurumunuzda çalışan Yeditepe Üniversitesi mezunu Bilgisayar Mühendisi Sayısı</label>
+            <label>
+              Şirketinizde/Kurumunuzda çalışan Yeditepe Üniversitesi mezunu
+              Bilgisayar Mühendisi Sayısı
+            </label>
             <input
               type="text"
               name="departmentCENGNumber"
@@ -264,9 +269,7 @@ const EvaluationForm = () => {
               <select
                 name={`evaluation${index}`}
                 value={formData.evaluations[index]}
-                onChange={(e) =>
-                  handleEvaluationChange(index, e.target.value)
-                }
+                onChange={(e) => handleEvaluationChange(index, e.target.value)}
               >
                 <option value="">Seçiniz</option>
                 <option value="1">1</option>
@@ -279,34 +282,54 @@ const EvaluationForm = () => {
             </div>
           ))}
 
-<div className='form-group'>
-                <label>Genel değerlendirme olarak, Yeditepe Üniversitesi Bilgisayar Mühendisliği mezunlarını diğer üniversitelerin Bilgisayar Mühendisliği mezunlarıyla nasıl karşılaştırırsınız?</label>
-                <select name = {`questions[${0}]`} value={formData.questions[0]}  onChange={(e) => handleQuestionsChange(0, e.target.value)}>
-                    <option value="">Seçiniz</option>
-                    <option value="Çok iyi">Çok iyi</option>
-                    <option value="İyi">İyi</option>
-                    <option value="Orta">Orta</option>
-                    <option value="Zayıf">Zayıf</option>
-                </select>
-              </div>
-              <div className='form-group'>
-                <label>Bu stajyerin gelecekte işyerinizde çalışmasını ister miydiniz?</label>
-                <select name = {`questions${1}`} value={formData.questions[1]}  onChange={(e) => handleQuestionsChange(1, e.target.value)}>
-                    <option value="">Seçiniz</option>
-                    <option value="Evet">Evet</option>
-                    <option value="Hayır">Hayır</option>
-                </select>
-              </div>
+          <div className="form-group">
+            <label>
+              Genel değerlendirme olarak, Yeditepe Üniversitesi Bilgisayar
+              Mühendisliği mezunlarını diğer üniversitelerin Bilgisayar
+              Mühendisliği mezunlarıyla nasıl karşılaştırırsınız?
+            </label>
+            <select
+              name={`questions[${0}]`}
+              value={formData.questions[0]}
+              onChange={(e) => handleQuestionsChange(0, e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              <option value="Çok iyi">Çok iyi</option>
+              <option value="İyi">İyi</option>
+              <option value="Orta">Orta</option>
+              <option value="Zayıf">Zayıf</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>
+              Bu stajyerin gelecekte işyerinizde çalışmasını ister miydiniz?
+            </label>
+            <select
+              name={`questions${1}`}
+              value={formData.questions[1]}
+              onChange={(e) => handleQuestionsChange(1, e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              <option value="Evet">Evet</option>
+              <option value="Hayır">Hayır</option>
+            </select>
+          </div>
 
-              <div className='form-group'>
-                <label>Gelecek yıl Yeditepe Üniversitesi Bilgisayar Mühendisliği Bölümü’nden
-                başka stajyerler çalıştırmak ister misiniz?</label>
-                <select name = {`questions${2}`} value={formData.questions[2]}  onChange={(e) => handleQuestionsChange(2, e.target.value)}>
-                    <option value="">Seçiniz</option>
-                    <option value="Evet">Evet</option>
-                    <option value="Hayır">Hayır</option>
-                </select>
-              </div>
+          <div className="form-group">
+            <label>
+              Gelecek yıl Yeditepe Üniversitesi Bilgisayar Mühendisliği
+              Bölümü’nden başka stajyerler çalıştırmak ister misiniz?
+            </label>
+            <select
+              name={`questions${2}`}
+              value={formData.questions[2]}
+              onChange={(e) => handleQuestionsChange(2, e.target.value)}
+            >
+              <option value="">Seçiniz</option>
+              <option value="Evet">Evet</option>
+              <option value="Hayır">Hayır</option>
+            </select>
+          </div>
 
           <div className="form-group">
             <label>Görüşleriniz</label>
@@ -317,7 +340,9 @@ const EvaluationForm = () => {
             />
           </div>
 
-          <button className='submit-btn' type="submit">Submit</button>
+          <button className="submit-btn" type="submit">
+            Submit
+          </button>
         </form>
       </div>
     </div>

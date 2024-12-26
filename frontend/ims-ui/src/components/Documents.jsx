@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import DocumentsService from '../services/DocumentsService';
-import HolidaysService from '../services/HolidaysService';
-import '../style/documents.css';
+import React, { useState, useEffect } from "react";
+import DocumentsService from "../services/DocumentsService";
+import HolidaysService from "../services/HolidaysService";
+import "../style/documents.css";
 
 const Documents = () => {
   const [documents, setDocuments] = useState([]);
@@ -9,12 +9,16 @@ const Documents = () => {
   const [isHolidayModal, setIsHolidayModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [holidays, setHolidays] = useState([]);
-  const [holidayData, setHolidayData] = useState({ startDate: '', endDate: '', description: '' });
+  const [holidayData, setHolidayData] = useState({
+    startDate: "",
+    endDate: "",
+    description: "",
+  });
 
   useEffect(() => {
     DocumentsService.getDocuments()
       .then((response) => setDocuments(response.data))
-      .catch((error) => console.error('Error fetching documents!', error));
+      .catch((error) => console.error("Error fetching documents!", error));
 
     loadHolidays();
   }, []);
@@ -22,47 +26,50 @@ const Documents = () => {
   const loadHolidays = () => {
     HolidaysService.getHolidays()
       .then((response) => setHolidays(response.data))
-      .catch((error) => console.error('Error fetching holidays!', error));
+      .catch((error) => console.error("Error fetching holidays!", error));
   };
 
   const handleDeleteDocument = (documentId) => {
     DocumentsService.deleteDocument(documentId)
-      .then(() => setDocuments(documents.filter((doc) => doc.id !== documentId)))
-      .catch((error) => console.error('Error deleting document!', error));
+      .then(() =>
+        setDocuments(documents.filter((doc) => doc.id !== documentId))
+      )
+      .catch((error) => console.error("Error deleting document!", error));
   };
 
   const handleFileChange = (e) => setSelectedFile(e.target.files[0]);
 
   const handleUpload = () => {
-    if (selectedFile && selectedFile.type === 'application/pdf') {
+    if (selectedFile && selectedFile.type === "application/pdf") {
       DocumentsService.uploadDocument(selectedFile)
         .then(() => {
           setIsUploadModal(false);
           setSelectedFile(null);
           DocumentsService.getDocuments()
             .then((response) => setDocuments(response.data))
-            .catch((error) => console.error('Error fetching documents', error));
+            .catch((error) => console.error("Error fetching documents", error));
         })
-        .catch((error) => console.error('Error uploading document!', error));
+        .catch((error) => console.error("Error uploading document!", error));
     } else {
-      alert('Only PDF files are allowed!');
+      alert("Only PDF files are allowed!");
     }
   };
 
   const handleDownload = (documentId, fileName) => {
     DocumentsService.downloadDocument(documentId)
       .then((response) => {
-        if (!response.data || response.data.size === 0) throw new Error('Empty or invalid PDF response');
+        if (!response.data || response.data.size === 0)
+          throw new Error("Empty or invalid PDF response");
 
         const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
+        const link = document.createElement("a");
         link.href = url;
-        link.setAttribute('download', fileName);
+        link.setAttribute("download", fileName);
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
       })
-      .catch((error) => console.error('Error downloading document!', error));
+      .catch((error) => console.error("Error downloading document!", error));
   };
 
   const handleHolidayChange = (e) => {
@@ -74,16 +81,16 @@ const Documents = () => {
     HolidaysService.createHolidays(holidayData)
       .then(() => {
         setIsHolidayModal(false);
-        setHolidayData({ startDate: '', endDate: '', description: '' });
+        setHolidayData({ startDate: "", endDate: "", description: "" });
         loadHolidays();
       })
-      .catch((error) => console.error('Error adding holiday!', error));
+      .catch((error) => console.error("Error adding holiday!", error));
   };
 
   const handleDeleteHoliday = (id) => {
     HolidaysService.deleteHoliday(id)
       .then(() => setHolidays(holidays.filter((holiday) => holiday.id !== id)))
-      .catch((error) => console.error('Error deleting holiday!', error));
+      .catch((error) => console.error("Error deleting holiday!", error));
   };
 
   return (
@@ -108,10 +115,16 @@ const Documents = () => {
         ))}
       </ul>
 
-      <button onClick={() => setIsUploadModal(true)} className="add-document-btn">
+      <button
+        onClick={() => setIsUploadModal(true)}
+        className="add-document-btn"
+      >
         Add Document
       </button>
-      <button onClick={() => setIsHolidayModal(true)} className="manage-holiday-btn">
+      <button
+        onClick={() => setIsHolidayModal(true)}
+        className="manage-holiday-btn"
+      >
         Manage Holidays
       </button>
 
@@ -124,7 +137,10 @@ const Documents = () => {
               <button className="modal-upload-btn" onClick={handleUpload}>
                 Upload
               </button>
-              <button className="modal-cancel-btn" onClick={() => setIsUploadModal(false)}>
+              <button
+                className="modal-cancel-btn"
+                onClick={() => setIsUploadModal(false)}
+              >
                 Cancel
               </button>
             </div>
@@ -141,7 +157,10 @@ const Documents = () => {
               {holidays.map((holiday) => (
                 <li key={holiday.id} className="holiday-item">
                   {holiday.startDate} - {holiday.endDate}: {holiday.description}
-                  <button onClick={() => handleDeleteHoliday(holiday.id)} className="delete-btn">
+                  <button
+                    onClick={() => handleDeleteHoliday(holiday.id)}
+                    className="delete-btn"
+                  >
                     Delete
                   </button>
                 </li>
@@ -163,7 +182,7 @@ const Documents = () => {
               placeholder="End Date"
             />
             <input
-              style={{marginTop: 5}}
+              style={{ marginTop: 5 }}
               type="text"
               name="description"
               value={holidayData.description}
@@ -171,10 +190,16 @@ const Documents = () => {
               placeholder="Description"
             />
             <div className="modal-buttons">
-              <button className="modal-upload-btn" onClick={handleHolidayUpload}>
+              <button
+                className="modal-upload-btn"
+                onClick={handleHolidayUpload}
+              >
                 Add Holiday
               </button>
-              <button className="modal-cancel-btn" onClick={() => setIsHolidayModal(false)}>
+              <button
+                className="modal-cancel-btn"
+                onClick={() => setIsHolidayModal(false)}
+              >
                 Cancel
               </button>
             </div>

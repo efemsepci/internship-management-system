@@ -1,104 +1,103 @@
-
 .submission-list-container {
-    flex: 1;
-    padding: 20px;
-    background-color: #0839AE; /* Açık gri arka plan */
-    min-height: 100vh;
-    box-sizing: border-box;
-  }
-  
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: white;
-  }
-  .submission-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: white;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  }
-  
-  .submission-table th,
-  .submission-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border: 1px solid #ddd;
-  }
-  
-  .submission-table th {
-    background-color: black;
-    color: white;
-    font-weight: bold;
-  }
-  
-  .submission-table tr:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .submission-table a {
-    color: black;
-    text-decoration: none;
-  }
-  
-  .submission-table a:hover {
-    text-decoration: underline;
-  }
-  
-  .submission-details {
-    margin-top: 20px;
-    padding: 15px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background: #f9f9f9;
-  }
+  flex: 1;
+  padding: 20px;
+  background-color: #0839ae; /* Açık gri arka plan */
+  min-height: 100vh;
+  box-sizing: border-box;
+}
 
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    width: 400px;
-    text-align: center;
-  }
-  
-  .modal-content textarea {
-    width: 100%;
-    height: 100px;
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-  
-  .modal-btn {
-    padding: 10px 20px;
-    margin: 5px;
-    border: none;
-    cursor: pointer;
-    background-color: #007bff;
-    color: white;
-    border-radius: 4px;
-  }
-  
-  .modal-btn.cancel {
-    background-color: #dc3545;
-  }
-  
-  .modal-btn:hover {
-    opacity: 0.9;
-  }
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+  color: white;
+}
+.submission-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.submission-table th,
+.submission-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+
+.submission-table th {
+  background-color: black;
+  color: white;
+  font-weight: bold;
+}
+
+.submission-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.submission-table a {
+  color: black;
+  text-decoration: none;
+}
+
+.submission-table a:hover {
+  text-decoration: underline;
+}
+
+.submission-details {
+  margin-top: 20px;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background: #f9f9f9;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+  text-align: center;
+}
+
+.modal-content textarea {
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.modal-btn {
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border-radius: 4px;
+}
+
+.modal-btn.cancel {
+  background-color: #dc3545;
+}
+
+.modal-btn:hover {
+  opacity: 0.9;
+}

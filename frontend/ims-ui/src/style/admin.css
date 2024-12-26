@@ -1,124 +1,123 @@
 .admin-container {
-    display: flex;
-    justify-content: space-between;
-    padding: 20px;
-    background-color: #0839ae;
-    min-height: 100vh;
-  }
-  
-  .user-list {
-    width: 60%;
-  }
-  
-  .user-list h3 {
-    color: white;
-    margin-bottom: 10px;
-  }
-  
-  .user-list ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .user-list li {
-    margin-bottom: 10px;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .user-list button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .create-user-btn {
-    margin-top: 20px;
-    padding: 10px 20px;
-    background-color: white;
-    color: #0839ae;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .create-user-btn:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .create-user-form {
-    width: 30%;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 5px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .create-user-form input,
-  .create-user-form select {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-  }
-  
-  .create-user-form button {
-    padding: 10px 20px;
-    background-color: #0839ae;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .create-user-form button:hover {
-    background-color: #0a2874;
-  }
-  
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    width: 300px;
-    text-align: center;
-  }
-  
-  .modal-buttons button {
-    margin: 5px;
-    padding: 10px 15px;
-    cursor: pointer;
-  }
-  
-  .confirm-btn {
-    background-color: green;
-    color: white;
-  }
-  
-  .cancel-btn {
-    background-color: red;
-    color: white;
-  }
-  
-  .modal-buttons button:hover {
-    opacity: 0.8;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #0839ae;
+  min-height: 100vh;
+}
+
+.user-list {
+  width: 60%;
+}
+
+.user-list h3 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.user-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-list li {
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-list button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.create-user-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: white;
+  color: #0839ae;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-user-btn:hover {
+  background-color: #f0f0f0;
+}
+
+.create-user-form {
+  width: 30%;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-user-form input,
+.create-user-form select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.create-user-form button {
+  padding: 10px 20px;
+  background-color: #0839ae;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.create-user-form button:hover {
+  background-color: #0a2874;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 300px;
+  text-align: center;
+}
+
+.modal-buttons button {
+  margin: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+}
+
+.confirm-btn {
+  background-color: green;
+  color: white;
+}
+
+.cancel-btn {
+  background-color: red;
+  color: white;
+}
+
+.modal-buttons button:hover {
+  opacity: 0.8;
+}
