@@ -23,7 +23,7 @@ public class HolidaysController {
     }
 
     @PostMapping
-    public ResponseEntity<Holidays> createEvaluation(@RequestBody Holidays holiday) {
+    public ResponseEntity<Holidays> createHoliday(@RequestBody Holidays holiday) {
         Holidays savedHoliday = holidaysService.saveHolidays(holiday);
         return new ResponseEntity<>(savedHoliday, HttpStatus.CREATED);
     }

@@ -74,9 +74,8 @@ const EvaluationForm = () => {
     }
 
     const evaluationToBeForm = await EvaluationService.getByUserId(user.id);
-    console.log(evaluationToBeForm.data[0]);
     if (evaluationToBeForm && evaluationToBeForm.data.length > 0) {
-      const evaluationId = evaluationToBeForm.data[0].id;
+      const evaluationId = evaluationToBeForm.data.length - 1;
 
       const response = await DocumentsService.generateEvaluationDocument(
         evaluationId
@@ -133,6 +132,7 @@ const EvaluationForm = () => {
               name="companyName"
               value={formData.companyName}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -142,6 +142,7 @@ const EvaluationForm = () => {
               name="sector"
               value={formData.sector}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -151,6 +152,7 @@ const EvaluationForm = () => {
               name="address"
               value={formData.address}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -159,6 +161,7 @@ const EvaluationForm = () => {
               name="companySize"
               value={formData.companySize}
               onChange={handleChange}
+              required
             >
               <option value="">Seçiniz</option>
               <option value="Büyük Ölçekli">Büyük Ölçekli</option>
@@ -173,6 +176,7 @@ const EvaluationForm = () => {
               name="internAdvisorFullName"
               value={formData.internAdvisorFullName}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -183,6 +187,7 @@ const EvaluationForm = () => {
               name="internAdvisorJob"
               value={formData.internAdvisorJob}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -193,15 +198,17 @@ const EvaluationForm = () => {
               name="internAdvisorPhone"
               value={formData.internAdvisorPhone}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
             <label>E-posta</label>
             <input
               type="text"
-              name="internAdvisorEmail"
+              name="internAdvisorMail"
               value={formData.internAdvisorMail}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -215,6 +222,7 @@ const EvaluationForm = () => {
               name="departmentCENGNumber"
               value={formData.departmentCENGNumber}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -224,6 +232,7 @@ const EvaluationForm = () => {
               name="stdName"
               value={formData.stdName}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -233,6 +242,7 @@ const EvaluationForm = () => {
               name="stdSurname"
               value={formData.stdSurname}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -242,6 +252,7 @@ const EvaluationForm = () => {
               name="internDepartment"
               value={formData.internDepartment}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -251,6 +262,7 @@ const EvaluationForm = () => {
               name="workDone"
               value={formData.workDone}
               onChange={handleChange}
+              required
             />
           </div>
           <div className="form-group">
@@ -260,6 +272,7 @@ const EvaluationForm = () => {
               name="internshipPlace"
               value={formData.internshipPlace}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -270,6 +283,7 @@ const EvaluationForm = () => {
                 name={`evaluation${index}`}
                 value={formData.evaluations[index]}
                 onChange={(e) => handleEvaluationChange(index, e.target.value)}
+                required
               >
                 <option value="">Seçiniz</option>
                 <option value="1">1</option>
@@ -292,6 +306,7 @@ const EvaluationForm = () => {
               name={`questions[${0}]`}
               value={formData.questions[0]}
               onChange={(e) => handleQuestionsChange(0, e.target.value)}
+              required
             >
               <option value="">Seçiniz</option>
               <option value="Çok iyi">Çok iyi</option>
@@ -308,6 +323,7 @@ const EvaluationForm = () => {
               name={`questions${1}`}
               value={formData.questions[1]}
               onChange={(e) => handleQuestionsChange(1, e.target.value)}
+              required
             >
               <option value="">Seçiniz</option>
               <option value="Evet">Evet</option>
@@ -324,6 +340,7 @@ const EvaluationForm = () => {
               name={`questions${2}`}
               value={formData.questions[2]}
               onChange={(e) => handleQuestionsChange(2, e.target.value)}
+              required
             >
               <option value="">Seçiniz</option>
               <option value="Evet">Evet</option>
@@ -337,6 +354,7 @@ const EvaluationForm = () => {
               name="opinion"
               value={formData.opinion}
               onChange={handleChange}
+              required
             />
           </div>
 

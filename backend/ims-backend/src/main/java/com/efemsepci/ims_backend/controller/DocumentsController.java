@@ -32,7 +32,7 @@ import java.util.zip.ZipOutputStream;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/documents")
-public class DocumentsController {
+public class  DocumentsController {
 
     @Autowired
     private DocumentsService documentsService;
@@ -308,7 +308,6 @@ public class DocumentsController {
             }
             acroFormKabul.flatten();
         }
-        // PDF'yi Belleğe Kaydet
         ByteArrayOutputStream basvuruFormuOutput = new ByteArrayOutputStream();
         documentBasvuruFormu.save(basvuruFormuOutput);
         documentBasvuruFormu.close();
@@ -333,7 +332,6 @@ public class DocumentsController {
             addPdfToZip(zipOut, "staj_basvuru_formu.pdf", stajBasvuruFormuOutput.toByteArray());
         }
 
-        // ZIP'i Response Olarak Döndür
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=forms.zip")
                 .header(HttpHeaders.CONTENT_TYPE, "application/zip")

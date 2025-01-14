@@ -15,6 +15,7 @@ const Documents = () => {
     description: "",
   });
 
+  const user = JSON.parse(sessionStorage.getItem("user"));
   useEffect(() => {
     DocumentsService.getDocuments()
       .then((response) => setDocuments(response.data))
@@ -121,12 +122,14 @@ const Documents = () => {
       >
         Add Document
       </button>
-      <button
-        onClick={() => setIsHolidayModal(true)}
-        className="manage-holiday-btn"
-      >
-        Manage Holidays
-      </button>
+      {user.role === "ADVISOR" && (
+        <button
+          onClick={() => setIsHolidayModal(true)}
+          className="manage-holiday-btn"
+        >
+          Manage Holidays
+        </button>
+      )}
 
       {isUploadModal && (
         <div className="modal">

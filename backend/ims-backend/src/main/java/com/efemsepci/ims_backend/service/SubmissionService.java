@@ -63,6 +63,7 @@ public class SubmissionService {
         submission.setInternAdvisorFullName(formData.get("internAdvisorFullName"));
         submission.setInternAdvisorPhone(formData.get("internAdvisorPhone"));
         submission.setInternAdvisorMail(formData.get("internAdvisorMail"));
+        submission.setInternAdvisorJob(formData.get("internAdvisorJob"));
         submission.setInternshipTopic(formData.get("internshipTopic"));
 
         submission.setCreatedAt(LocalDateTime.now());

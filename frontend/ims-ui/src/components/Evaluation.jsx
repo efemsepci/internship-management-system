@@ -96,7 +96,9 @@ const Evaluation = () => {
         <tbody>
           {internships.map((internship) => (
             <tr key={internship.id}>
-              <td>{internship.stdFullName}</td>
+              <td>
+                {internship.stdName} {internship.stdSurname}
+              </td>
               <td>{internship.stdId}</td>
               <td>{internship.companyName}</td>
               <td>{internship.startDate}</td>

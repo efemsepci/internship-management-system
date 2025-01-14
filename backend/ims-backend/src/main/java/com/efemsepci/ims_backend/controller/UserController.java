@@ -20,8 +20,6 @@ import java.util.Map;
 public class UserController {
 
     private UserService userService;
-    private MessageService messageService;
-    private SubmissionService submissionService;
 
     @GetMapping("/users")
     public List<User> getAllUsers(){

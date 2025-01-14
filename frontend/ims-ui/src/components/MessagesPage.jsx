@@ -239,7 +239,14 @@ const MessagesPage = () => {
                     <strong>
                       {message.createdAt} {message.sender.name}:
                     </strong>{" "}
-                    {message.content}
+                    <span
+                      style={{
+                        wordWrap: "break-word",
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      {message.content}
+                    </span>
                   </li>
                 ))}
               </ul>
