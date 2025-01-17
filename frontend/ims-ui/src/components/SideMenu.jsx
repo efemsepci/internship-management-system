@@ -60,7 +60,7 @@ const SideMenu = () => {
         )}
         {user.role === "STUDENT" && (
           <li>
-            <a href="/evaluation-form">Evaluation Form</a>
+            <a href="/send-evaluation-form">Send Evaluation Form</a>
           </li>
         )}
         {user.role === "ADMIN" && (

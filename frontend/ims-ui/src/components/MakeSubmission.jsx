@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import UserService from "../services/UserService";
 import SubmissionService from "../services/SubmissionService";
 import "../style/makeSubmission.css";
 

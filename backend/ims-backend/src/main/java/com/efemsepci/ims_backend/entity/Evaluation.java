@@ -28,7 +28,6 @@ public class Evaluation {
     private String companyName;
     private String address;
     private String internDepartment;
-    private String companyPhoneNumber;
     private String sector;
     private String departmentCENGNumber;
     private String internAdvisorFullName;

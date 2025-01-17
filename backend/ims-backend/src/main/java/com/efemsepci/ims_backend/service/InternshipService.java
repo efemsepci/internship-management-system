@@ -1,6 +1,7 @@
 package com.efemsepci.ims_backend.service;
 
 import com.efemsepci.ims_backend.entity.Internship;
+import com.efemsepci.ims_backend.entity.Student;
 import com.efemsepci.ims_backend.entity.Submission;
 import com.efemsepci.ims_backend.repository.InternshipRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,4 +87,15 @@ public class InternshipService {
         }
         return internshipRepository.save(internship);
     }
+
+    public List<Internship> getInternshipByStudent(Student student) {
+        List<Internship> allInternships = internshipRepository.findByStudent(student);
+        for(int i = 0; i < allInternships.size(); i++){
+            if(allInternships.get(i).getGrade() != null){
+                allInternships.remove(i);
+            }
+        }
+        return allInternships;
+    }
+
 }

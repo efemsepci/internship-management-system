@@ -1,7 +1,10 @@
 package com.efemsepci.ims_backend.controller;
 
 import com.efemsepci.ims_backend.entity.Evaluation;
+import com.efemsepci.ims_backend.entity.Internship;
+import com.efemsepci.ims_backend.service.EmailService;
 import com.efemsepci.ims_backend.service.EvaluationService;
+import com.efemsepci.ims_backend.service.InternshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,9 @@ public class EvaluationController {
 
     @Autowired
     private EvaluationService evaluationService;
+
+    @Autowired
+    private EmailService emailService;
 
     @GetMapping
     public ResponseEntity<List<Evaluation>> getAllEvaluations() {
@@ -49,5 +55,17 @@ public class EvaluationController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/send-evaluation-link")
+    public ResponseEntity<?> sendEvaluationLink(@RequestParam Long studentId, @RequestParam String coordinatorEmail) {
+
+        String evaluationLink = "http://localhost:3000/evaluation-form?studentId=" + studentId;
+
+        String subject = "Yeditepe Üniversitesi Bilgisayar Mühendisliği Bölümü Stajyer Değerlendirme Formu";
+        String body = "Merhaba,\n\nLütfen bu linke tıklayarak öğrencinin değerlendirme formunu doldurun: " + evaluationLink;
+        emailService.sendEmail(coordinatorEmail, subject, body);
+
+        return ResponseEntity.ok("Evaluation form link sent.");
     }
 }

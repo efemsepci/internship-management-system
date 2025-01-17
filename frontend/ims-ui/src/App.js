@@ -13,32 +13,41 @@ import SecretarySubmissions from "./components/SecretarySubmissions";
 import EvaluationForm from "./components/EvaluationForm";
 import Admin from "./components/Admin";
 import Internships from "./components/Internships";
+import SendEvaluationLink from "./components/SendEvaluationLink";
 
 function App() {
   return (
     <Router>
-      <Layout>
-        <Routes>
-          <Route path="/" element={<LoginScreen />} />
-          <Route path="/register" element={<RegisterScreen />} />
-          <Route path="/documents" element={<Documents />} />
-          <Route path="/std-documents" element={<FillDocuments />} />
-          <Route path="/evaluation" element={<Evaluation />} />
-          <Route path="/messages" element={<MessagesPage />} />
-          <Route path="/make-submission" element={<MakeSubmission />}></Route>
-          <Route
-            path="/submissions"
-            element={<Submissions></Submissions>}
-          ></Route>
-          <Route
-            path="/sec-submissions"
-            element={<SecretarySubmissions />}
-          ></Route>
-          <Route path="/evaluation-form" element={<EvaluationForm />}></Route>
-          <Route path="/users" element={<Admin />}></Route>
-          <Route path="/internships" element={<Internships />}></Route>
-        </Routes>
-      </Layout>
+      <Routes>
+        <Route path="/evaluation-form" element={<EvaluationForm />} />
+        <Route
+          path="/*"
+          element={
+            <Layout>
+              <Routes>
+                <Route path="/" element={<LoginScreen />} />
+                <Route path="/register" element={<RegisterScreen />} />
+                <Route path="/documents" element={<Documents />} />
+                <Route path="/std-documents" element={<FillDocuments />} />
+                <Route path="/evaluation" element={<Evaluation />} />
+                <Route path="/messages" element={<MessagesPage />} />
+                <Route path="/make-submission" element={<MakeSubmission />} />
+                <Route path="/submissions" element={<Submissions />} />
+                <Route
+                  path="/sec-submissions"
+                  element={<SecretarySubmissions />}
+                />
+                <Route
+                  path="/send-evaluation-form"
+                  element={<SendEvaluationLink />}
+                />
+                <Route path="/users" element={<Admin />} />
+                <Route path="/internships" element={<Internships />} />
+              </Routes>
+            </Layout>
+          }
+        />
+      </Routes>
     </Router>
   );
 }

@@ -91,7 +91,7 @@ public class SubmissionController {
 
         byte[] fileContent = submission.getFileContent();
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_PDF); // Dosya türüne göre değiştirin
+        headers.setContentType(MediaType.APPLICATION_PDF);
         headers.setContentDisposition(ContentDisposition.builder("attachment")
                 .filename("submission_" + id + ".pdf")
                 .build());

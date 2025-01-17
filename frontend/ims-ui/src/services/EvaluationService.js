@@ -18,6 +18,15 @@ class EvaluationService {
   getByUserId(userId) {
     return axios.get(EVALUATION_API_URL + "/user/" + userId);
   }
+  sendEvaluationLink(studentId, coordinatorEmail) {
+    return axios.post(
+      EVALUATION_API_URL +
+        "/send-evaluation-link?studentId=" +
+        studentId +
+        "&coordinatorEmail=" +
+        coordinatorEmail
+    );
+  }
 }
 
 export default new EvaluationService();

@@ -27,6 +27,9 @@ class InternshipService {
         statusDescription
     );
   }
+  getInternshipByStudent(stdId) {
+    return axios.get(INTERNSHIP_API_URL + "/student/" + stdId);
+  }
 }
 
 export default new InternshipService();

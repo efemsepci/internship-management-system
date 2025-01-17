@@ -1,9 +1,12 @@
 package com.efemsepci.ims_backend.controller;
 
 import com.efemsepci.ims_backend.entity.Internship;
+import com.efemsepci.ims_backend.entity.Student;
 import com.efemsepci.ims_backend.entity.Submission;
+import com.efemsepci.ims_backend.entity.User;
 import com.efemsepci.ims_backend.service.InternshipService;
 import com.efemsepci.ims_backend.service.SubmissionService;
+import com.efemsepci.ims_backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,9 @@ public class InternshipController {
 
     @Autowired
     private SubmissionService submissionService;
+
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/create/{submissionId}")
     public ResponseEntity<Internship> createInternship(@PathVariable Long submissionId) {
@@ -48,6 +54,18 @@ public class InternshipController {
         List<Internship> internships = internshipService.getInternships();
         return ResponseEntity.ok(internships);
     }
+
+    @GetMapping("/student/{id}")
+    public List<Internship> getInternshipsByStudent(@PathVariable Long id) {
+        ResponseEntity<User> response = userService.getUserById(id);
+        if (response.getBody() == null) {
+            throw new IllegalArgumentException("Student not found!");
+        }
+        User student = response.getBody();
+        return internshipService.getInternshipByStudent((Student) student);
+    }
+
+
 
     @PutMapping("/{id}")
     public ResponseEntity<Internship> updateInternship(

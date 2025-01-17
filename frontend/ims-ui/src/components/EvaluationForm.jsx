@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import EvaluationService from "../services/EvaluationService";
 import DocumentsService from "../services/DocumentsService";
 import "../style/makeSubmission.css";
@@ -19,12 +20,13 @@ const EvaluationForm = () => {
     workDone: "",
     internshipPlace: "",
     companySize: "",
-    evaluations: Array(20).fill(),
-    questions: Array(3).fill(),
+    evaluations: Array(20).fill(3),
+    questions: Array(3).fill("Evet"),
     opinion: "",
   });
 
-  const user = JSON.parse(sessionStorage.getItem("user"));
+  const [searchParams] = useSearchParams();
+  const studentId = searchParams.get("studentId");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,8 +47,10 @@ const EvaluationForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    e.preventDefault();
     const evaluation = {
-      userId: user.id,
+      userId: studentId,
       companyName: formData.companyName,
       sector: formData.sector,
       address: formData.address,
@@ -65,17 +69,19 @@ const EvaluationForm = () => {
       questions: formData.questions,
       opinion: formData.opinion,
     };
+
     try {
       await EvaluationService.createEvaluation(evaluation);
       alert("Evaluation submitted successfully!");
     } catch (error) {
       console.error("Error submitting evaluation:", error);
-      alert("There was an error submitting the evaluation.");
+      alert("Failed to submit evaluation.");
     }
-
-    const evaluationToBeForm = await EvaluationService.getByUserId(user.id);
+    const evaluationToBeForm = await EvaluationService.getByUserId(studentId);
+    console.log(evaluationToBeForm.data);
     if (evaluationToBeForm && evaluationToBeForm.data.length > 0) {
-      const evaluationId = evaluationToBeForm.data.length - 1;
+      const evaluationId =
+        evaluationToBeForm.data[evaluationToBeForm.data.length - 1].id;
 
       const response = await DocumentsService.generateEvaluationDocument(
         evaluationId
@@ -96,6 +102,12 @@ const EvaluationForm = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (!studentId) {
+      alert("Invalid link. Missing student ID.");
+    }
+  }, [studentId]);
 
   const evaluationCriteria = [
     "Matematik, fen ve mühendislik bilgilerini uygulama becerisi",
